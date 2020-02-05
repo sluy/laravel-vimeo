@@ -48,7 +48,7 @@ class MeController
         $videoRoute = V::getClient()->upload($path, $config);
         unlink($path);
 
-        return redirect()->route('laravel-vimeo.me.index')->with('status', __('laravel-vimeo.words::video_saved', ['route' => $videoRoute]));
+        return redirect()->route('laravel-vimeo.me.index')->with('status', __('laravel-vimeo::words.video_saved', ['route' => $videoRoute]));
     }
 
     protected function getStoreRules()
