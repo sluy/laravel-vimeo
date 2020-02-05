@@ -23,7 +23,7 @@
         @forelse($pagination->getItems() as $item)
         <div class="col-xs-12 col-md-6 col-lg-3 mb-4">
             <div class="card" data-id="{{$item->getId()}}">
-                <img class="card-img-top" data-type="thumbnail" src="{{$item->getPictureUrl('big', true)}}" alt="p" onclick="runIframe({{$item->getId()}})">
+                <img class="card-img-top" data-type="thumbnail" src="{{$item->getPictureUrl('big')}}" alt="p" onclick="runIframe({{$item->getId()}})" style="cursor:pointer;">
                 {!! $item->getEmbedAs('div') !!}
                 <div class="card-body">
                     <h4>{{$item->get('name')}}</h4>

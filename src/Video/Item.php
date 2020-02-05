@@ -50,6 +50,7 @@ class Item extends Base
     {
         $html = $this->get('embed.html');
         $html = str_replace('<iframe ', "<{$control} data-type=\"iframe\" style=\"width:100% !important;height:auto !important;\" ", $html);
+        $html = str_replace($this->getId().'?', $this->getId().'?autoplay=1&amp;', $html);
 
         return str_replace('</iframe>', "</{$control}>", $html);
     }
