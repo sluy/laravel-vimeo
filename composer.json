@@ -1,0 +1,54 @@
+{
+    "name": "vientodigital/laravel-vimeo",
+    "description": "A Laravel Forum Package",
+    "keywords": [
+        "vientodigital",
+        "laravel-vimeo"
+    ],
+    "homepage": "https://github.com/vientodigital/laravel-vimeo",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Victor Yoalli",
+            "email": "victoryoalli@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.8.*|^6.0",
+        "vimeo/vimeo-api": "^3.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vientodigital\\LaravelVimeo\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vientodigital\\LaravelVimeo\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vientodigital\\LaravelVimeo\\LaravelVimeoServiceProvider"
+            ],
+            "aliases": {
+                "LaravelVimeo": "Vientodigital\\LaravelVimeo\\LaravelVimeoFacade"
+            }
+        }
+    }
+}
