@@ -39,8 +39,7 @@
                         @endforelse
                     </div>
                     <p>
-                        {{$item->getId()}}
-                        {{$item->getDescription(__('laravel-vimeo::words.no_description'))}}
+                        {{$item->get('description', __('laravel-vimeo::words.no_description'))}}
                     </p>
                     <div class="text-center mt-5">
                         <a class="btn btn-sm btn-primary" href="{{$item->get('link')}}" target="_blank">
