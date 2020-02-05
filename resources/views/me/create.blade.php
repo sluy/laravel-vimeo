@@ -26,7 +26,7 @@
         </div>
         <div class="form-group">
             <label for="description"  class="font-weight-bold">@lang('laravel-vimeo::words.description')</label>
-            <textarea class="form-control" type="text" name="description" id="description" value="{{old('description')}}" maxlength="1000">{{old('description')}}</textarea>
+            <textarea class="form-control" type="text" name="description" id="description" maxlength="1000">{{old('description')}}</textarea>
             @if($errors->has('description'))
             <p class="text-danger">{{$errors->first('description')}}</p>
             @endif

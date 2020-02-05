@@ -25,4 +25,9 @@ return [
     'unlisted' => 'Unlisted',
     'public' => 'Public',
     'description' => 'Description',
+    'pagination_message' => 'showing :page of :total_pages pages',
+    'next' => 'Next',
+    'previous' => 'Previous',
+    'first' => 'First',
+    'last' => 'Last',
 ];

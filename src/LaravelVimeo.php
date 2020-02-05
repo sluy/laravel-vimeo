@@ -81,7 +81,8 @@ class LaravelVimeo
         }
         $client = $this->getClient($config->get('connection', 'default'));
         $paginationConfig = [
-            'per_page' => $config->get('per_page', 10),
+            'page' => $config->get('page', 1),
+            'per_page' => $config->get('per_page', 5),
         ];
 
         $data = $client->request($config->get('route', '/me/videos'), $paginationConfig, 'GET');

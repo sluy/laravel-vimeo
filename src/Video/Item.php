@@ -41,11 +41,17 @@ class Item extends Base
         return $this->resolvePictureUrl($this->get('user.pictures.sizes'), $size);
     }
 
-    public function getEmbedIframeAs($control = 'div')
+    public function getId()
+    {
+        return (int) str_replace('/videos/', '', $this->get('uri'));
+    }
+
+    public function getEmbedAs($control = 'div')
     {
         $html = $this->get('embed.html');
+        $html = str_replace('<iframe ', "<{$control} data-type=\"iframe\" style=\"width:100% !important;height:auto !important;\" ", $html);
 
-        return str_replace('</iframe>', "</{$control}>", str_replace('<iframe ', "<{$control} ", $html));
+        return str_replace('</iframe>', "</{$control}>", $html);
     }
 
     protected function resolvePictureUrl($data, $size, $playButton = false)

@@ -10,7 +10,10 @@ class MeController
 {
     public function index()
     {
-        $pagination = V::paginate();
+        $pagination = V::paginate([
+            'page' => request()->get('page', 1),
+            'per_page' => request()->get('per_page', 5),
+        ]);
 
         return view('laravel-vimeo::me.index', compact('pagination'));
     }

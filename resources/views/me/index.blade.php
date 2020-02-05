@@ -22,8 +22,9 @@
     <div class="row">
         @forelse($pagination->getItems() as $item)
         <div class="col-xs-12 col-md-6 col-lg-3 mb-4">
-            <div class="card">
-                <img class="card-img-top" src="{{$item->getPictureUrl('big', true)}}" alt="p" click="runIframe(this)">
+            <div class="card" data-id="{{$item->getId()}}">
+                <img class="card-img-top" data-type="thumbnail" src="{{$item->getPictureUrl('big', true)}}" alt="p" onclick="runIframe({{$item->getId()}})">
+                {!! $item->getEmbedAs('div') !!}
                 <div class="card-body">
                     <h4>{{$item->get('name')}}</h4>
                     <div>
@@ -38,6 +39,7 @@
                         @endforelse
                     </div>
                     <p>
+                        {{$item->getId()}}
                         {{$item->getDescription(__('laravel-vimeo::words.no_description'))}}
                     </p>
                     <div class="text-center mt-5">
@@ -54,5 +56,38 @@
             </div>
         @endforelse
     </div>
+    <div class="text-right">
+
+        <nav aria-label="pagination" class="d-inline-block">
+            <ul class="pagination">
+                @foreach($pagination->getRelativePagination() as $current)
+                    <li class="page-item{{$current['active']?' active':''}}{{$current['disabled']?' disabled':''}}">
+                        <a class="page-link" href="{{$current['url']}}">{{$current['label']}}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </nav>
+        <br/>
+        <small>
+            @lang('laravel-vimeo::words.pagination_message', [ 'page' => $pagination->getCurrentPage(), 'total_pages' => $pagination->getLastPage()])
+        </small>
+    </div>
 </div>
+
+<script type="text/javascript">
+    function runIframe(id) {
+        document.querySelectorAll('[data-id="'+id+'"] [data-type="thumbnail"]').forEach(function (el) {
+            el.parentNode.removeChild(el);
+        });
+        document.querySelectorAll('[data-id="'+id+'"] [data-type="iframe"]').forEach(function (el) {
+            var d = document.createElement('iframe');
+            for (var i = 0; i < el.attributes.length; i++) {
+                var attrib = el.attributes[i];
+                d.setAttribute(attrib.name, attrib.value);
+            }
+            el.parentNode.replaceChild(d, el);
+            d.click();
+        });
+    }
+</script>
 @endsection

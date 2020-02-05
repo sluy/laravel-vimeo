@@ -52,7 +52,7 @@ class Pagination extends Base
 
     public function getLastPage()
     {
-        return $this->get('total', 1);
+        return ceil($this->get('total', 1) / $this->get('per_page', 5));
     }
 
     public function getPreviousPageUrl()
@@ -73,5 +73,67 @@ class Pagination extends Base
     public function getLastPageUrl()
     {
         return $this->get('paging.last');
+    }
+
+    public function getRelativePagination($qty = 5)
+    {
+        $currentPage = $this->getCurrentPage();
+        $totalPages = $this->getLastPage();
+
+        $media = (int) ($qty / 2);
+        $start = $currentPage - $media;
+        $end = $currentPage + $media;
+        $slots = [];
+
+        if ($start < 1) {
+            $start = 1;
+            $end = $qty;
+        }
+        if ($end > $totalPages) {
+            $start = $totalPages - $qty;
+            $end = $totalPages;
+            if ($start < 1) {
+                $start = 1;
+            }
+        }
+
+        $slots[] = [
+            'active' => false,
+            'label' => __('laravel-vimeo::words.first'),
+            'disabled' => 1 === $currentPage,
+            'url' => route('laravel-vimeo.me.index').'?page=1',
+        ];
+
+        $slots[] = [
+            'active' => false,
+            'label' => __('laravel-vimeo::words.previous'),
+            'disabled' => 1 === $currentPage,
+            'url' => route('laravel-vimeo.me.index').'?page='.($currentPage > 1 ? ($currentPage - 1) : '1'),
+        ];
+
+        for ($n = $start; $n <= $end; ++$n) {
+            $slots[] = [
+                'active' => $n === $currentPage,
+                'label' => $n,
+                'url' => route('laravel-vimeo.me.index').'?page='.$n,
+                'disabled' => false,
+            ];
+        }
+
+        $slots[] = [
+            'active' => false,
+            'label' => __('laravel-vimeo::words.next'),
+            'disabled' => $totalPages === $currentPage,
+            'url' => route('laravel-vimeo.me.index').'?page='.($totalPages === $currentPage ? $totalPages : ($currentPage + 1)),
+        ];
+
+        $slots[] = [
+            'active' => false,
+            'label' => __('laravel-vimeo::words.last'),
+            'disabled' => $totalPages === $currentPage,
+            'url' => route('laravel-vimeo.me.index').'?page='.$totalPages,
+        ];
+
+        return $slots;
     }
 }
